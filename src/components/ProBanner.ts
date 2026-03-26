@@ -1,5 +1,8 @@
 import { trackGateHit } from '@/services/analytics';
 
+const BANNER_ENABLED = import.meta.env.VITE_PRO_BANNER_ENABLED !== 'false';
+const BANNER_CONTENT = import.meta.env.VITE_PRO_BANNER_CONTENT || '';
+
 let bannerEl: HTMLElement | null = null;
 
 /* TODO: re-enable dismiss after pro launch promotion period
@@ -27,18 +30,24 @@ function dismiss(): void {
 }
 */
 
+const DEFAULT_BANNER_TEXT =
+  '<strong>Pro is coming</strong> — More Signal, Less Noise. More AI Briefings. A Geopolitical &amp; Equity Researcher just for you.';
+
 export function showProBanner(container: HTMLElement): void {
+  if (!BANNER_ENABLED) return;
   if (bannerEl) return;
   if (window.self !== window.top) return;
 
   trackGateHit('pro-banner');
+
+  const bannerText = BANNER_CONTENT || DEFAULT_BANNER_TEXT;
 
   const banner = document.createElement('div');
   banner.className = 'pro-banner';
   banner.innerHTML = `
     <span class="pro-banner-badge">PRO</span>
     <span class="pro-banner-text">
-      <strong>Pro is coming</strong> — More Signal, Less Noise. More AI Briefings. A Geopolitical &amp; Equity Researcher just for you.
+      ${bannerText}
     </span>
     <a class="pro-banner-cta" href="/pro">Reserve your spot →</a>
   `;
