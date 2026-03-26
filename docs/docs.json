@@ -38,10 +38,6 @@
       {
         "label": "Pro",
         "href": "https://www.worldmonitor.app/pro"
-      },
-      {
-        "label": "GitHub",
-        "href": "https://github.com/koala73/worldmonitor"
       }
     ],
     "primary": {
@@ -264,7 +260,6 @@
   },
   "footer": {
     "socials": {
-      "github": "https://github.com/koala73/worldmonitor",
       "discord": "https://discord.gg/re63kWKxaz",
       "x": "https://x.com/worldmonitorai"
     },
@@ -289,10 +284,6 @@
       {
         "header": "Community",
         "items": [
-          {
-            "label": "GitHub",
-            "href": "https://github.com/koala73/worldmonitor"
-          },
           {
             "label": "Discord",
             "href": "https://discord.gg/re63kWKxaz"

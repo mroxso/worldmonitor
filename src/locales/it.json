@@ -144,7 +144,6 @@
     "sources": "FONTI",
     "copyLink": "Copia link",
     "fullscreen": "Schermo intero",
-    "viewOnGitHub": "Visualizza su GitHub",
     "pinMap": "Appunta la mappa in alto",
     "filterSources": "Filtra fonti...",
     "sourcesEnabled": "{{enabled}}/{{total}} abilitate",

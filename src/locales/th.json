@@ -147,7 +147,6 @@
     "fullscreen": "เต็มจอ",
     "pinMap": "ปักหมุดแผนที่ไว้ด้านบน",
     "selectRegion": "เลือกภูมิภาค",
-    "viewOnGitHub": "ดูบน GitHub",
     "filterSources": "กรองแหล่งข้อมูล...",
     "sourcesEnabled": "เปิดใช้งาน {{enabled}}/{{total}}",
     "finance": "การเงิน",

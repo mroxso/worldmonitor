@@ -161,7 +161,7 @@ const Logo = () => (
     </div>
     <div className="flex flex-col">
       <span className="font-display font-bold text-sm leading-none tracking-tight">WORLD MONITOR</span>
-      <span className="text-[9px] text-wm-muted font-mono uppercase tracking-widest leading-none mt-1">by Someone.ceo</span>
+      <span className="text-[9px] text-wm-muted font-mono uppercase tracking-widest leading-none mt-1"></span>
     </div>
   </a>
 );
@@ -927,7 +927,7 @@ const Footer = () => (
         <img src="/favico/favicon-32x32.png" alt="" width="28" height="28" className="rounded-full" />
         <div className="flex flex-col">
           <span className="font-display font-bold text-sm leading-none tracking-tight text-wm-text">WORLD MONITOR</span>
-          <span className="text-[9px] uppercase tracking-[2px] opacity-60 mt-0.5">by Someone.ceo</span>
+          <span className="text-[9px] uppercase tracking-[2px] opacity-60 mt-0.5"></span>
         </div>
       </div>
       <div className="flex items-center gap-6">
@@ -935,7 +935,6 @@ const Footer = () => (
         <a href="https://www.worldmonitor.app/blog/" className="hover:text-wm-text transition-colors">Blog</a>
         <a href="https://www.worldmonitor.app/docs" className="hover:text-wm-text transition-colors">Docs</a>
         <a href="https://status.worldmonitor.app/" target="_blank" rel="noreferrer" className="hover:text-wm-text transition-colors">Status</a>
-        <a href="https://github.com/koala73/worldmonitor" target="_blank" rel="noreferrer" className="hover:text-wm-text transition-colors">GitHub</a>
         <a href="https://discord.gg/re63kWKxaz" target="_blank" rel="noreferrer" className="hover:text-wm-text transition-colors">Discord</a>
         <a href="https://x.com/worldmonitorai" target="_blank" rel="noreferrer" className="hover:text-wm-text transition-colors">X</a>
       </div>
@@ -1127,7 +1126,7 @@ const EnterprisePage = () => (
           <img src="/favico/favicon-32x32.png" alt="" width="28" height="28" className="rounded-full" />
           <div className="flex flex-col">
             <span className="font-display font-bold text-sm leading-none tracking-tight text-wm-text">WORLD MONITOR</span>
-            <span className="text-[9px] uppercase tracking-[2px] opacity-60 mt-0.5">by Someone.ceo</span>
+            <span className="text-[9px] uppercase tracking-[2px] opacity-60 mt-0.5"></span>
           </div>
         </div>
         <div className="flex items-center gap-6">
@@ -1135,7 +1134,6 @@ const EnterprisePage = () => (
           <a href="https://www.worldmonitor.app/blog/" className="hover:text-wm-text transition-colors">Blog</a>
           <a href="https://www.worldmonitor.app/docs" className="hover:text-wm-text transition-colors">Docs</a>
           <a href="https://status.worldmonitor.app/" target="_blank" rel="noreferrer" className="hover:text-wm-text transition-colors">Status</a>
-          <a href="https://github.com/koala73/worldmonitor" target="_blank" rel="noreferrer" className="hover:text-wm-text transition-colors">GitHub</a>
           <a href="https://discord.gg/re63kWKxaz" target="_blank" rel="noreferrer" className="hover:text-wm-text transition-colors">Discord</a>
           <a href="https://x.com/worldmonitorai" target="_blank" rel="noreferrer" className="hover:text-wm-text transition-colors">X</a>
         </div>

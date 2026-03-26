@@ -145,7 +145,6 @@
     "copyLink": "نسخ الرابط",
     "fullscreen": "ملء الشاشة",
     "pinMap": "تثبيت الخريطة في الأعلى",
-    "viewOnGitHub": "عرض على GitHub",
     "filterSources": "تصفية المصادر...",
     "sourcesEnabled": "{{enabled}}/{{total}} مفعّلة",
     "finance": "المالية",
@@ -281,7 +280,6 @@
     "gulfIndices": "مؤشرات الخليج",
     "gulfCurrencies": "عملات الخليج",
     "gulfOil": "نفط الخليج",
-
     "bigmac": "Real Big Mac Index",
     "fearGreed": "Fear & Greed"
   },

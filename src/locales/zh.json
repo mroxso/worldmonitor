@@ -147,7 +147,6 @@
     "fullscreen": "全屏",
     "pinMap": "将地图固定到顶部",
     "selectRegion": "选择地区",
-    "viewOnGitHub": "在GitHub上查看",
     "filterSources": "筛选数据源...",
     "sourcesEnabled": "已启用{{enabled}}/{{total}}",
     "finance": "金融",
@@ -281,7 +280,6 @@
     "gulfIndices": "海湾指数",
     "gulfCurrencies": "海湾货币",
     "gulfOil": "海湾石油",
-
     "bigmac": "Real Big Mac Index",
     "fearGreed": "Fear & Greed"
   },

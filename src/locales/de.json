@@ -144,7 +144,6 @@
     "sources": "QUELLEN",
     "copyLink": "Link kopieren",
     "fullscreen": "Vollbild",
-    "viewOnGitHub": "Auf GitHub ansehen",
     "pinMap": "Karte oben anpinnen",
     "filterSources": "Quellen filtern...",
     "sourcesEnabled": "{{enabled}}/{{total}} aktiviert",

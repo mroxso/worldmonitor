@@ -572,8 +572,8 @@
         "stockExchanges": "Bolsas de Valores",
         "financialCenters": "Centros Financeiros",
         "centralBanks": "Bancos Centrais",
-      "laborMarket": "Labor Market",
-      "metroUnemployment": "Metro Unemployment",
+        "laborMarket": "Labor Market",
+        "metroUnemployment": "Metro Unemployment",
         "commodityHubs": "Centros de commodities",
         "gulfInvestments": "Investimentos do CCG",
         "tradeRoutes": "Rotas Comerciais",
@@ -2223,7 +2223,6 @@
   "header": {
     "world": "MUNDO",
     "tech": "TECH",
-    "viewOnGitHub": "Ver no GitHub",
     "live": "AO VIVO",
     "search": "Procurar",
     "copyLink": "Copiar link",

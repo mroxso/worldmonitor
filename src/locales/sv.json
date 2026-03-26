@@ -572,8 +572,8 @@
         "stockExchanges": "Börser",
         "financialCenters": "Finansiella centra",
         "centralBanks": "centralbanker",
-      "laborMarket": "Labor Market",
-      "metroUnemployment": "Metro Unemployment",
+        "laborMarket": "Labor Market",
+        "metroUnemployment": "Metro Unemployment",
         "commodityHubs": "Råvaruhubbar",
         "gulfInvestments": "GCC-investeringar",
         "tradeRoutes": "Handelsrutter",
@@ -2223,7 +2223,6 @@
   "header": {
     "world": "VÄRLD",
     "tech": "TECH",
-    "viewOnGitHub": "Visa på GitHub",
     "live": "LIVE",
     "search": "Söka",
     "copyLink": "Kopiera länk",

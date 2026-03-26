@@ -535,26 +535,6 @@ canvas,
   vertical-align: middle;
 }
 
-.credit-link {
-  font-size: 9px;
-  color: var(--muted);
-  opacity: 0.6;
-  font-weight: normal;
-  letter-spacing: 0.5px;
-  text-decoration: none;
-  transition: opacity 0.2s;
-}
-
-.credit-link:hover {
-  opacity: 1;
-  color: var(--accent);
-}
-
-/* Hide X logo on desktop, show text */
-.credit-link .x-logo {
-  display: none;
-}
-
 .status-indicator {
   display: flex;
   align-items: center;
@@ -760,31 +740,8 @@ canvas,
   transform: rotate(45deg);
 }
 
-.github-link {
-  color: var(--text-dim);
-  margin-left: 8px;
-  display: flex;
-  align-items: center;
-  transition: color 0.2s;
-}
-
-.github-link:hover {
-  color: var(--text);
-}
-
-.github-stars {
-  font-size: 11px;
-  margin-left: 4px;
-  opacity: 0.7;
-}
-
 /* Medium-width desktop: keep header utility actions reachable when OS scaling
    reduces the effective viewport width (e.g. 1920px @ 150% = ~1280px CSS). */
-@media (max-width: 1360px) {
-  .credit-link {
-    display: none;
-  }
-}
 
 .search-btn {
   padding: 4px 10px;
@@ -11801,8 +11758,6 @@ a.prediction-link:hover {
   .variant-switcher,
   .version,
   .beta-badge,
-  .credit-link,
-  .github-link,
   .region-selector,
   .mobile-settings-btn,
   .header-right {
@@ -15725,18 +15680,6 @@ a.prediction-link:hover {
 .maplibregl-ctrl-top-right,
 .maplibregl-ctrl-bottom-right {
   display: none;
-}
-
-/* Map author credit badge (inside layers panel) */
-.map-author-badge {
-  padding: 6px 10px;
-  font-family: var(--font-mono, 'JetBrains Mono', monospace);
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  color: #00e5ff;
-  border-top: 1px solid rgba(0, 229, 255, 0.2);
-  pointer-events: none;
 }
 
 /* Map tile attribution */

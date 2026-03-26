@@ -144,7 +144,6 @@
     "sources": "FUENTES",
     "copyLink": "Copiar enlace",
     "fullscreen": "Pantalla completa",
-    "viewOnGitHub": "Ver en GitHub",
     "pinMap": "Anclar el mapa hacia arriba",
     "filterSources": "Filtrar fuentes...",
     "sourcesEnabled": "{{enabled}}/{{total}} habilitado",
@@ -281,7 +280,6 @@
     "gulfIndices": "Índices del Golfo",
     "gulfCurrencies": "Monedas del Golfo",
     "gulfOil": "Petróleo del Golfo",
-
     "bigmac": "Real Big Mac Index",
     "fearGreed": "Fear & Greed"
   },

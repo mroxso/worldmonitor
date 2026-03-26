@@ -147,7 +147,6 @@
     "fullscreen": "전체 화면",
     "pinMap": "지도를 상단에 고정",
     "selectRegion": "지역 선택",
-    "viewOnGitHub": "GitHub에서 보기",
     "filterSources": "소스 필터...",
     "sourcesEnabled": "{{enabled}}/{{total}} 활성화됨",
     "finance": "금융",
