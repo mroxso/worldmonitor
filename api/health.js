@@ -54,10 +54,21 @@ const BOOTSTRAP_KEYS = {
   aiTokens:          'market:ai-tokens:v1',
   otherTokens:       'market:other-tokens:v1',
   fredBatch:         'economic:fred:v1:FEDFUNDS:0',
+  ecbEstr:           'economic:fred:v1:ESTR:0',
+  ecbEuribor3m:      'economic:fred:v1:EURIBOR3M:0',
+  ecbEuribor6m:      'economic:fred:v1:EURIBOR6M:0',
+  ecbEuribor1y:      'economic:fred:v1:EURIBOR1Y:0',
   fearGreedIndex:    'market:fear-greed:v1',
+  euYieldCurve:      'economic:yield-curve-eu:v1',
   earningsCalendar:  'market:earnings-calendar:v1',
   econCalendar:      'economic:econ-calendar:v1',
   cotPositioning:    'market:cot:v1',
+  crudeInventories:  'economic:crude-inventories:v1',
+  natGasStorage:     'economic:nat-gas-storage:v1',
+  ecbFxRates:        'economic:ecb-fx-rates:v1',
+  eurostatCountryData: 'economic:eurostat-country-data:v1',
+  euGasStorage:      'economic:eu-gas-storage:v1',
+  euFsi:             'economic:fsi-eu:v1',
 };
 
 const STANDALONE_KEYS = {
@@ -180,12 +191,23 @@ const SEED_META = {
   aiTokens:          { key: 'seed-meta:market:token-panels', maxStaleMin: 90 },
   otherTokens:       { key: 'seed-meta:market:token-panels', maxStaleMin: 90 },
   fredBatch:         { key: 'seed-meta:economic:fred:v1:FEDFUNDS:0', maxStaleMin: 1500 }, // daily cron
+  ecbEstr:           { key: 'seed-meta:economic:ecb-short-rates',   maxStaleMin: 4320 }, // daily ECB publish; 4320min = 3d = TTL/interval
+  ecbEuribor3m:      { key: 'seed-meta:economic:ecb-short-rates',   maxStaleMin: 4320 }, // shared meta key with ecbEstr
+  ecbEuribor6m:      { key: 'seed-meta:economic:ecb-short-rates',   maxStaleMin: 4320 }, // shared meta key with ecbEstr
+  ecbEuribor1y:      { key: 'seed-meta:economic:ecb-short-rates',   maxStaleMin: 4320 }, // shared meta key with ecbEstr
   gscpi:             { key: 'seed-meta:economic:gscpi',               maxStaleMin: 2880 }, // 24h interval; 2880min = 48h = 2x interval
   fearGreedIndex:    { key: 'seed-meta:market:fear-greed',            maxStaleMin: 720 }, // 6h cron; 720min = 12h = 2x interval
   hormuzTracker:     { key: 'seed-meta:supply_chain:hormuz_tracker',  maxStaleMin: 2880 }, // daily cron; 2880min = 48h = 2x interval
   earningsCalendar:  { key: 'seed-meta:market:earnings-calendar',     maxStaleMin: 1440 }, // 12h cron; 1440min = 24h = 2x interval
   econCalendar:      { key: 'seed-meta:economic:econ-calendar',       maxStaleMin: 1440 }, // 12h cron; 1440min = 24h = 2x interval
   cotPositioning:    { key: 'seed-meta:market:cot',                   maxStaleMin: 14400 }, // weekly CFTC release; 14400min = 10d = 1.4x interval (weekend + delay buffer)
+  crudeInventories:  { key: 'seed-meta:economic:crude-inventories',   maxStaleMin: 20160 }, // weekly EIA data; 20160min = 14 days = 2x weekly cadence
+  natGasStorage:     { key: 'seed-meta:economic:nat-gas-storage',     maxStaleMin: 20160 }, // weekly EIA data; 20160min = 14 days = 2x weekly cadence
+  ecbFxRates:        { key: 'seed-meta:economic:ecb-fx-rates',        maxStaleMin: 2880 }, // daily seed; 2880min = 48h = 2x interval
+  eurostatCountryData: { key: 'seed-meta:economic:eurostat-country-data', maxStaleMin: 4320 }, // daily seed; 4320min = 3 days = 3x interval
+  euGasStorage:      { key: 'seed-meta:economic:eu-gas-storage',      maxStaleMin: 2880 }, // daily seed (T+1); 2880min = 48h = 2x interval
+  euYieldCurve:      { key: 'seed-meta:economic:yield-curve-eu',      maxStaleMin: 2880 }, // daily seed (weekdays); 2880min = 48h = 2x interval
+  euFsi:             { key: 'seed-meta:economic:fsi-eu',               maxStaleMin: 20160 }, // weekly seed (Saturday); 20160min = 14d = 2x interval
 };
 
 // Standalone keys that are populated on-demand by RPC handlers (not seeds).

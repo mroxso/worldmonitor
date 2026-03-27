@@ -27,6 +27,12 @@ import {
   type GetNationalDebtResponse,
   type NationalDebtEntry,
   type GetBlsSeriesResponse,
+  type GetCrudeInventoriesResponse,
+  type CrudeInventoryWeek,
+  type GetNatGasStorageResponse,
+  type NatGasStorageWeek,
+  type GetEcbFxRatesResponse,
+  type EcbFxRate,
 } from '@/generated/client/worldmonitor/economic/v1/service_client';
 import { createCircuitBreaker } from '@/utils';
 import { getCSSColor } from '@/utils';
@@ -68,6 +74,10 @@ const emptyFredBatchFallback: GetFredSeriesBatchResponse = { results: {}, fetche
 const fredBatchBreaker = createCircuitBreaker<GetFredSeriesBatchResponse>({ name: 'FRED Batch', cacheTtlMs: 15 * 60 * 1000, persistCache: true });
 const emptyWbFallback: ListWorldBankIndicatorsResponse = { data: [], pagination: undefined };
 const emptyEiaFallback: GetEnergyPricesResponse = { prices: [] };
+const emptyCrudeFallback: GetCrudeInventoriesResponse = { weeks: [], latestPeriod: '' };
+const crudeBreaker = createCircuitBreaker<GetCrudeInventoriesResponse>({ name: 'EIA Crude Inventories', cacheTtlMs: 60 * 60 * 1000, persistCache: true });
+const emptyNatGasFallback: GetNatGasStorageResponse = { weeks: [], latestPeriod: '' };
+const natGasBreaker = createCircuitBreaker<GetNatGasStorageResponse>({ name: 'EIA Nat Gas Storage', cacheTtlMs: 60 * 60 * 1000, persistCache: true });
 const emptyCapacityFallback: GetEnergyCapacityResponse = { series: [] };
 const emptyBisPolicyFallback: GetBisPolicyRatesResponse = { rates: [] };
 const emptyBisEerFallback: GetBisExchangeRatesResponse = { rates: [] };
@@ -399,6 +409,44 @@ export function getTrendColor(trend: OilMetric['trend'], inverse = false): strin
 }
 
 // ========================================================================
+// EIA Crude Oil Inventories (WCRSTUS1) -- weekly stockpile data
+// ========================================================================
+
+export type { CrudeInventoryWeek };
+
+export async function fetchCrudeInventoriesRpc(): Promise<GetCrudeInventoriesResponse> {
+  if (!isFeatureAvailable('energyEia')) return emptyCrudeFallback;
+  const hydrated = getHydratedData('crudeInventories') as GetCrudeInventoriesResponse | undefined;
+  if (hydrated?.weeks?.length) return hydrated;
+  try {
+    return await crudeBreaker.execute(async () => {
+      return client.getCrudeInventories({}, { signal: AbortSignal.timeout(20_000) });
+    }, emptyCrudeFallback);
+  } catch {
+    return emptyCrudeFallback;
+  }
+}
+
+// ========================================================================
+// EIA Natural Gas Storage (NW2_EPG0_SWO_R48_BCF) -- weekly storage data
+// ========================================================================
+
+export type { NatGasStorageWeek };
+
+export async function fetchNatGasStorageRpc(): Promise<GetNatGasStorageResponse> {
+  if (!isFeatureAvailable('energyEia')) return emptyNatGasFallback;
+  const hydrated = getHydratedData('natGasStorage') as GetNatGasStorageResponse | undefined;
+  if (hydrated?.weeks?.length) return hydrated;
+  try {
+    return await natGasBreaker.execute(async () => {
+      return client.getNatGasStorage({}, { signal: AbortSignal.timeout(20_000) });
+    }, emptyNatGasFallback);
+  } catch {
+    return emptyNatGasFallback;
+  }
+}
+
+// ========================================================================
 // EIA Capacity -- installed generation capacity (solar, wind, coal)
 // ========================================================================
 
@@ -712,5 +760,29 @@ export async function fetchBisData(): Promise<BisData> {
     };
   } catch {
     return empty;
+  }
+}
+
+// ========================================================================
+// ECB Reference FX Rates
+// ========================================================================
+
+export type { GetEcbFxRatesResponse, EcbFxRate };
+
+const ecbFxRatesBreaker = createCircuitBreaker<GetEcbFxRatesResponse>({ name: 'ECB FX Rates', cacheTtlMs: 4 * 60 * 60 * 1000 });
+const emptyEcbFxRatesFallback: GetEcbFxRatesResponse = { rates: [], updatedAt: '', seededAt: '0', unavailable: true };
+
+export async function getEcbFxRatesData(): Promise<GetEcbFxRatesResponse> {
+  const hydrated = getHydratedData('ecbFxRates') as GetEcbFxRatesResponse | undefined;
+  if (hydrated?.rates?.length) return hydrated;
+
+  try {
+    return await ecbFxRatesBreaker.execute(
+      () => client.getEcbFxRates({}, { signal: AbortSignal.timeout(12_000) }),
+      emptyEcbFxRatesFallback,
+      { shouldCache: (r) => (r.rates?.length ?? 0) > 0 },
+    );
+  } catch {
+    return emptyEcbFxRatesFallback;
   }
 }

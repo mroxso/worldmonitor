@@ -58,6 +58,7 @@ import {
   fetchNaturalEvents,
   fetchRecentAwards,
   fetchOilAnalytics,
+  fetchCrudeInventoriesRpc,
   fetchBisData,
   fetchBlsData,
   fetchCyberThreats,
@@ -1273,13 +1274,19 @@ export class DataLoaderManager implements AppModule {
         name: sectorNameMap.get(s.symbol) ?? s.name,
         change: s.change,
       });
+      const toSectorBar = (s: { symbol?: string; name: string; change: number | null }) =>
+        s.symbol && Number.isFinite(s.change) ? { symbol: s.symbol, name: s.name, change1d: s.change as number } : null;
       if (hydratedSectors?.sectors?.length) {
         warmSectorCache(hydratedSectors);
-        heatmapPanel?.renderHeatmap(hydratedSectors.sectors.map(toHeatmapItem));
+        const items = hydratedSectors.sectors.map(toHeatmapItem);
+        const sectorBars = items.map(toSectorBar).filter((s): s is NonNullable<typeof s> => s !== null);
+        heatmapPanel?.renderHeatmap(items, sectorBars.length ? sectorBars : undefined);
       } else {
         const sectorsResp = await fetchSectors();
         if (sectorsResp.sectors.length > 0) {
-          heatmapPanel?.renderHeatmap(sectorsResp.sectors.map(toHeatmapItem));
+          const items = sectorsResp.sectors.map(toHeatmapItem);
+          const sectorBars = items.map(toSectorBar).filter((s): s is NonNullable<typeof s> => s !== null);
+          heatmapPanel?.renderHeatmap(items, sectorBars.length ? sectorBars : undefined);
         } else if (stocksResult.skipped) {
           this.ctx.panels['heatmap']?.showConfigError(finnhubConfigMsg);
         }
@@ -2486,15 +2493,29 @@ export class DataLoaderManager implements AppModule {
   async loadOilAnalytics(): Promise<void> {
     const energyPanel = this.ctx.panels['energy-complex'] as EnergyComplexPanel | undefined;
     try {
-      const data = await fetchOilAnalytics();
-      energyPanel?.updateAnalytics(data);
-      const hasData = !!(data.wtiPrice || data.brentPrice || data.usProduction || data.usInventory);
-      this.ctx.statusPanel?.updateApi('EIA', { status: hasData ? 'ok' : 'error' });
-      if (hasData) {
-        const metricCount = [data.wtiPrice, data.brentPrice, data.usProduction, data.usInventory].filter(Boolean).length;
-        dataFreshness.recordUpdate('oil', metricCount || 1);
+      const [data, crudeResp] = await Promise.allSettled([
+        fetchOilAnalytics(),
+        fetchCrudeInventoriesRpc(),
+      ]);
+      if (data.status === 'fulfilled') {
+        energyPanel?.updateAnalytics(data.value);
+        const hasData = !!(data.value.wtiPrice || data.value.brentPrice || data.value.usProduction || data.value.usInventory);
+        this.ctx.statusPanel?.updateApi('EIA', { status: hasData ? 'ok' : 'error' });
+        if (hasData) {
+          const metricCount = [data.value.wtiPrice, data.value.brentPrice, data.value.usProduction, data.value.usInventory].filter(Boolean).length;
+          dataFreshness.recordUpdate('oil', metricCount || 1);
+        } else {
+          dataFreshness.recordError('oil', 'Oil analytics returned no values');
+        }
       } else {
-        dataFreshness.recordError('oil', 'Oil analytics returned no values');
+        console.error('[App] Oil analytics failed:', data.reason);
+        this.ctx.statusPanel?.updateApi('EIA', { status: 'error' });
+        dataFreshness.recordError('oil', String(data.reason));
+      }
+      if (crudeResp.status === 'fulfilled' && crudeResp.value.weeks.length > 0) {
+        energyPanel?.updateCrudeInventories(crudeResp.value.weeks);
+      } else if (crudeResp.status === 'rejected') {
+        console.warn('[App] Crude inventories fetch failed:', crudeResp.reason);
       }
     } catch (e) {
       console.error('[App] Oil analytics failed:', e);
